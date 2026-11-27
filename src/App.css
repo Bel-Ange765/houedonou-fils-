@@ -236,21 +236,6 @@
 
 
 
-.brand-descriptor {
-
-  margin-top: 5px;
-
-  color: var(--muted);
-
-  font-size: 9px;
-
-  font-weight: 550;
-
-  letter-spacing: 0.11em;
-
-  text-transform: uppercase;
-
-}
 
 
 
@@ -2240,14 +2225,6 @@
   .brand-name {
 
     font-size: 12px;
-
-  }
-
-
-
-  .brand-descriptor {
-
-    font-size: 8px;
 
   }
 
