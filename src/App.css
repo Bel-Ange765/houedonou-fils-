@@ -107,18 +107,50 @@
 
 
 
-.brand > svg,
-
-.footer-brand > svg {
-
-  width: 40px;
-
-  height: 40px;
-
+.brand-logo-crop,
+.footer-logo-crop {
+  position: relative;
+  display: block;
   flex: none;
+  overflow: hidden;
+}
 
+.brand-logo-crop {
+  width: 48px;
+  height: 52px;
+}
+
+.brand-logo-crop img,
+.footer-logo-crop img {
+  position: absolute;
+  top: 0;
+  max-width: none;
+  mix-blend-mode: multiply;
+}
+
+.brand-logo-crop img {
+  left: -8.5px;
+  width: 65px;
+  height: 65px;
+}
+
+.footer-logo-crop {
+  width: 30px;
+  height: 34px;
+}
+
+.footer-logo-crop img {
+  left: -5.5px;
+  width: 43px;
+  height: 43px;
+}
+
+.brand > svg,
+.footer-brand > svg {
+  width: 40px;
+  height: 40px;
+  flex: none;
   stroke: var(--blue);
-
   stroke-width: 1.2;
 
 }
@@ -337,10 +369,7 @@
   gap: clamp(30px, 8vw, 120px);
 
   padding: 76px clamp(36px, 11vw, 168px) 90px clamp(36px, 12.5vw, 192px);
-
 }
-
-
 
 .hero-copy {
 
@@ -1834,11 +1863,15 @@
 
 
 
-  .brand > svg {
+  .brand-logo-crop {
+    width: 43px;
+    height: 47px;
+  }
 
-    width: 36px;
-
-    height: 36px;
+  .brand-logo-crop img {
+    left: -8px;
+    width: 59px;
+    height: 59px;
 
   }
 
@@ -1985,9 +2018,7 @@
 
 
   .hero-artwork {
-
     width: min(84%, 400px);
-
     justify-self: center;
 
   }
@@ -2275,8 +2306,7 @@
 
 
   .hero-artwork {
-
-    width: 89%;
+    width: min(100%, 320px);
 
   }
 

@@ -1,45 +1,89 @@
 import { useState } from "react";
 import "./App.css";
+import "./site.css";
 
-const services = [
+const expertiseAreas = [
   {
     number: "01",
-    icon: "shield",
+    category: "Activité",
     title: "Protection des données personnelles",
     description:
-      "Renforcez votre maîtrise des données et la confiance de vos parties prenantes.",
+      "Accompagnement juridique et assistance pour examiner vos traitements de données personnelles et structurer votre mise en conformité.",
+    points: [
+      "Audit juridique et technique des traitements",
+      "Cartographie et registre des traitements",
+      "Mesures de sécurité adaptées",
+      "Assistance en cas de difficulté ou d’incident",
+    ],
   },
   {
     number: "02",
-    icon: "compass",
+    category: "Accompagnement",
     title: "Accompagnement relatif à l’ARS et à l’APDP",
     description:
-      "Un accompagnement dédié à vos démarches liées à l’ARS et à l’APDP.",
+      "Un appui pour identifier et préparer les démarches relatives aux traitements de données personnelles auprès de l’APDP.",
+    points: [
+      "Analyse de la situation et des formalités applicables",
+      "Accompagnement des démarches de déclaration",
+      "Préparation des demandes d’autorisation",
+      "Assistance adaptée à votre activité",
+    ],
   },
   {
     number: "03",
-    icon: "archive",
+    category: "Formation",
     title: "Formation à l’archivage physique et électronique",
     description:
-      "Faites évoluer les pratiques d’archivage au sein de vos équipes.",
+      "Des formations et un accompagnement pour organiser le traitement et la conservation des archives et de l’information documentaire.",
+    points: [
+      "Organisation des archives et des centres documentaires",
+      "Archivage physique et électronique",
+      "Dématérialisation des courriers, factures et actes",
+      "Formation des équipes",
+    ],
   },
   {
     number: "04",
-    icon: "documents",
+    category: "Gestion documentaire",
     title: "Gestion électronique des documents",
     description:
-      "Structurez, centralisez et valorisez vos documents.",
+      "Conseil et accompagnement pour structurer les documents, les bibliothèques et les systèmes d’information documentaire.",
+    points: [
+      "Audit documentaire et étude des besoins",
+      "Intégration d’une solution de GED libre ou propriétaire",
+      "Bibliothèques virtuelles et bases documentaires",
+      "Informatisation des centres d’archives",
+    ],
   },
   {
     number: "05",
-    icon: "search",
+    category: "Conformité",
     title: "Lutte contre le blanchiment des capitaux",
     description:
-      "Renforcez vos dispositifs de vigilance et de conformité.",
+      "Formations sur la prévention du blanchiment de capitaux et du financement du terrorisme, adaptées aux secteurs concernés.",
+    points: [
+      "Banques, microfinances et assurances",
+      "Secteur immobilier",
+      "Professions juridiques",
+      "Vigilance, contrôles et obligations sectorielles",
+    ],
   },
 ];
 
-function Icon({ name, className = "" }) {
+const faqs = [
+  {
+    question: "À qui s’adressent vos services ?",
+    answer:
+      "Les entreprises, associations, institutions publiques, professions réglementées, structures de santé et autres organismes peuvent nous solliciter. L’accompagnement est défini selon votre activité, vos traitements et vos besoins.",
+  },
+  {
+    question: "Pouvez-vous accompagner un projet de vidéosurveillance ?",
+    answer:
+      "Nous pouvons vous aider à examiner les traitements envisagés et à identifier les démarches à vérifier auprès de l’APDP. Les formalités dépendent de la situation et doivent être confirmées avec l’autorité compétente.",
+  },
+];
+
+function Icon({ name }) {
   const paths = {
     arrow: (
       <>
@@ -47,44 +91,12 @@ function Icon({ name, className = "" }) {
         <path d="m13 6 6 6-6 6" />
       </>
     ),
-    archive: (
-      <>
-        <path d="M3 4h18v5H3z" />
-        <path d="M5 9v11h14V9M10 13h4" />
-      </>
-    ),
-    compass: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="m15.5 8.5-2 5-5 2 2-5z" />
-      </>
-    ),
-    documents: (
-      <>
-        <path d="M14 2H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <path d="M14 2v6h6M8 13h8M8 17h8" />
-      </>
-    ),
-    menu: (
-      <>
-        <path d="M4 7h16M4 12h16M4 17h16" />
-      </>
-    ),
-    close: (
-      <>
-        <path d="m18 6-12 12M6 6l12 12" />
-      </>
-    ),
+    menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+    close: <path d="m18 6-12 12M6 6l12 12" />,
     search: (
       <>
         <circle cx="11" cy="11" r="7" />
         <path d="m20 20-4-4M11 8v6M8 11h6" />
-      </>
-    ),
-    shield: (
-      <>
-        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11" />
-        <path d="m9 12 2 2 4-4" />
       </>
     ),
   };
@@ -92,7 +104,6 @@ function Icon({ name, className = "" }) {
   return (
     <svg
       aria-hidden="true"
-      className={className}
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
@@ -105,21 +116,12 @@ function Icon({ name, className = "" }) {
   );
 }
 
-function BrandMark() {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 44 44">
-      <path d="M22 2 40 9v12c0 11-7.7 18-18 21C11.7 39 4 32 4 21V9L22 2Z" />
-      <path d="M15 14v16m14-16v16m-14-8h14" />
-    </svg>
-  );
-}
-
 function HeroArtwork() {
   return (
     <div className="hero-artwork">
       <img
         src="https://img.magnific.com/photos-premium/etudiant-medecine-posant-question-lors-seminaire_274679-36456.jpg?semt=ais_hybrid&w=740&q=80"
-        alt="Illustration de HOUEDONOU & FILS"
+        alt="Professionnel de santé lors d’un séminaire"
         className="hero-image"
       />
     </div>
@@ -142,10 +144,12 @@ function App() {
           href="#accueil"
           onClick={closeMenu}
         >
-          <BrandMark />
+          <span aria-hidden="true" className="brand-logo-crop">
+            <img src="/houedonou-fils-logo.jpg" alt="" />
+          </span>
           <span className="brand-copy">
             <span className="brand-name">HOUEDONOU <span>&amp; FILS</span></span>
-            <span className="brand-descriptor">Conseil · Conformité · Archives</span>
+            <span className="brand-descriptor">Enseigne de HORUS INTERNATIONAL GROUP</span>
           </span>
         </a>
 
@@ -165,14 +169,10 @@ function App() {
           className={`primary-navigation${menuOpen ? " is-open" : ""}`}
           id="primary-navigation"
         >
-          <a href="#accueil" onClick={closeMenu}>Accueil</a>
-          <a href="#presentation" onClick={closeMenu}>Notre approche</a>
-          <a href="#services" onClick={closeMenu}>Nos expertises</a>
-          <a href="#plateforme" onClick={closeMenu}>La plateforme</a>
-          <a className="nav-cta" href="#services" onClick={closeMenu}>
-            Nos domaines d’intervention
-            <Icon name="arrow" />
-          </a>
+          <a href="#groupe" onClick={closeMenu}>Le groupe</a>
+          <a href="#expertises" onClick={closeMenu}>Nos activités</a>
+          <a href="#sante" onClick={closeMenu}>Santé</a>
+          <a href="#faq" onClick={closeMenu}>FAQ</a>
         </nav>
       </header>
 
@@ -181,182 +181,200 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow">
               <span className="eyebrow-rule" />
-              Conseil · Conformité · Archives
+              Numérique · Données · Archives
             </p>
             <h1 id="hero-title">
-              La conformité,
+              Le numérique,
               <br />
-              pensée pour <em>durer.</em>
+              en <em>confiance.</em>
             </h1>
             <p className="hero-description">
-              Des enjeux réglementaires à la maîtrise documentaire, nous
-              accompagnons les organisations avec méthode, clarté et exigence.
+              Conseil, accompagnement et formation pour aider les organisations
+              à protéger leurs données, maîtriser leurs risques et faire évoluer
+              leurs pratiques.
             </p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#services">
+              <a className="button button-dark" href="#expertises">
                 Découvrir nos expertises
                 <Icon name="arrow" />
-              </a>
-              <a className="text-link" href="#presentation">
-                Découvrir notre approche
               </a>
             </div>
             <div className="hero-assurance">
               <span aria-hidden="true" className="assurance-line" />
-              <span>Un partenaire engagé à vos côtés</span>
+              <span>Accompagnement sur mesure</span>
             </div>
           </div>
-          <HeroArtwork  className="hidden"/>
-          <span aria-hidden="true" className="hero-index">01 — 05</span>
+          <HeroArtwork />
+          <span aria-hidden="true" className="hero-index">CONSEIL — FORMATION</span>
         </section>
 
-        <section
-          aria-labelledby="presentation-title"
-          className="approach section-shell"
-          id="presentation"
-        >
-          <div className="section-index">01 <span>—</span> Notre approche</div>
-          <div className="approach-content">
-            <p className="eyebrow">Conseil en conformité &amp; maîtrise documentaire</p>
-            <h2 id="presentation-title">
-              La rigueur du conseil.
-              <br />
-              <em>La force de la confiance.</em>
-            </h2>
-            <div className="approach-bottom">
-              <p>
-                HOUEDONOU &amp; FILS intervient dans la conformité, la protection
-                des données, l’archivage et la gestion documentaire. Une
-                expertise pensée pour éclairer vos enjeux et accompagner vos
-                démarches avec discernement.
-              </p>
-              <div aria-label="Nos engagements" className="principles">
-                <span>Exigence</span>
-                <span>Confidentialité</span>
-                <span>Engagement</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="services-title"
-          className="services section-shell"
-          id="services"
-        >
-          <div className="services-heading">
+        <section aria-labelledby="group-title" className="intro-section" id="groupe">
+          <div className="section-shell intro-grid">
             <div>
-              <div className="section-index">02 <span>—</span> Nos expertises</div>
-              <p className="eyebrow">Des réponses adaptées à vos enjeux</p>
-              <h2 id="services-title">
-                Maîtriser vos obligations.
-                <br />
-                <em>Sérénité dans l’action.</em>
+              <p className="section-kicker">HOUEDONOU &amp; FILS</p>
+              <h2 id="group-title">
+                Une expertise concrète au service de vos <em>enjeux numériques.</em>
               </h2>
             </div>
-            <p className="services-intro">
-              Cinq domaines d’intervention au croisement de la conformité, de
-              la gouvernance des données et de la maîtrise documentaire.
-            </p>
+            <div className="intro-copy">
+              <p>
+                HOUEDONOU &amp; FILS est l’enseigne commerciale de HORUS
+                INTERNATIONAL GROUP, une entreprise spécialisée en ingénierie
+                informatique et en accompagnement à la protection des données
+                personnelles.
+              </p>
+              <p>
+                Nous accompagnons entreprises, institutions publiques et
+                professions réglementées grâce à une approche pragmatique,
+                collaborative et adaptée aux réalités du terrain.
+              </p>
+              <div className="intro-values">
+                <span>Conseil opérationnel</span>
+                <span>Accompagnement adapté</span>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="service-grid">
-            {services.map((service) => (
-              <article className="service-card" key={service.number}>
-                <div className="service-card-top">
-                  <span className="service-icon">
-                    <Icon name={service.icon} />
-                  </span>
-                  <span className="service-number">{service.number}</span>
+        <section aria-labelledby="expertise-title" className="expertise-section" id="expertises">
+          <div className="section-shell">
+            <div className="section-heading">
+              <div>
+                <p className="section-kicker">Nos activités</p>
+                <h2 id="expertise-title">
+                  Nos domaines d’intervention, au service de votre <em>organisation.</em>
+                </h2>
+              </div>
+              <p>
+                Nos cinq activités principales, présentées dans leur périmètre,
+                avec des modalités adaptées à vos besoins.
+              </p>
+            </div>
+
+            <div className="expertise-grid">
+              {expertiseAreas.map((area) => (
+                <article className="expertise-card" key={area.number}>
+                  <div className="expertise-card-top">
+                    <span className="expertise-number">{area.number}</span>
+                    <span className="expertise-category">{area.category}</span>
+                  </div>
+                  <h3>{area.title}</h3>
+                  <p className="expertise-description">{area.description}</p>
+                  <ul>
+                    {area.points.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="method-title" className="method-section">
+          <div className="section-shell method-layout">
+            <div>
+              <p className="section-kicker">Notre façon de travailler</p>
+              <h2 id="method-title">
+                Du besoin initial à une démarche <em>structurée.</em>
+              </h2>
+              <p className="method-intro">
+                Une collaboration construite autour de votre organisation,
+                avec des objectifs compréhensibles et un accompagnement adapté.
+              </p>
+            </div>
+            <ol className="method-steps">
+              <li>
+                <span>01</span>
+                <div>
+                  <h3>Comprendre votre contexte</h3>
+                  <p>Échanger sur vos activités, vos pratiques et vos priorités.</p>
                 </div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <span aria-hidden="true" className="card-rule" />
-              </article>
-            ))}
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <h3>Définir l’accompagnement</h3>
+                  <p>Préciser le périmètre, le programme et les modalités de travail.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <h3>Transmettre et faire évoluer</h3>
+                  <p>Accompagner vos équipes dans la mise en œuvre des actions retenues.</p>
+                </div>
+              </li>
+            </ol>
           </div>
         </section>
 
         <section
-          aria-labelledby="platform-title"
-          className="platform"
-          id="plateforme"
+          aria-labelledby="health-title"
+          className="health-platform-section"
+          id="sante"
         >
-          <div className="platform-inner section-shell">
-            <div className="platform-copy">
-              <div className="section-index section-index-light">
-                03 <span>—</span> Votre espace dédié
-              </div>
-              <p className="eyebrow">Bientôt à vos côtés</p>
-              <h2 id="platform-title">
-                Une plateforme pensée
-                <br />
-                pour <em>vous accompagner.</em>
+          <div className="section-shell health-platform-layout">
+            <div className="health-platform-copy">
+              <p className="section-kicker">Établissements de santé</p>
+              <h2 id="health-title">
+                Votre clinique est-elle prête pour le dispositif de sécurité des patients ?
               </h2>
-              <p className="platform-description">
-                Un espace dédié à l’évaluation et au suivi de la sécurité des
-                patients est en préparation. Nous vous en dirons davantage
-                prochainement.
+              <p className="health-effective-date">Depuis juillet 2025</p>
+              <p>
+                Le dispositif de l’ARS relatif à la sécurité des patients
+                s’applique aux formations sanitaires publiques et privées.
+                Des évaluateurs de l’ARS suivent sa mise en œuvre.
               </p>
-              <a className="button button-light" href="#services">
-                Découvrir nos expertises
-                <Icon name="arrow" />
-              </a>
+              <p>
+                HOUEDONOU &amp; FILS accompagne les établissements de santé dans
+                la préparation à ce dispositif.
+              </p>
             </div>
-
-            <div aria-hidden="true" className="platform-preview">
-              <div className="preview-topbar">
-                <span className="preview-brand-mark">H<span>&amp;</span>F</span>
-                <span className="preview-status">
-                  <span />
-                  Bientôt disponible
-                </span>
-              </div>
-              <div className="preview-content">
-                <span className="preview-kicker">VOTRE ESPACE</span>
-                <span className="preview-heading">Évaluation &amp; suivi</span>
-                <span className="preview-divider" />
-                <span className="preview-skeleton preview-skeleton-long" />
-                <span className="preview-skeleton preview-skeleton-short" />
-                <span className="preview-progress">
-                  <span />
-                </span>
-                <span className="preview-footnote">
-                  Une expérience pensée pour vos équipes
-                </span>
-              </div>
-              <span aria-hidden="true" className="preview-orbit preview-orbit-one" />
-              <span aria-hidden="true" className="preview-orbit preview-orbit-two" />
+            <div className="health-sector-card">
+              <span className="health-card-label">Accompagnement santé</span>
+              <span className="health-card-title">
+                Établissements de santé de premier contact
+              </span>
+              <span className="health-card-divider" />
+              <span className="health-card-description">
+                Dispositif de l’ARS pour la sécurité des patients
+              </span>
             </div>
           </div>
         </section>
 
-        <section aria-labelledby="closing-title" className="closing">
-          <div className="closing-inner section-shell">
-            <p className="eyebrow">Votre prochaine étape</p>
-            <h2 id="closing-title">
-              Des enjeux singuliers.
-              <br />
-              Des réponses <em>adaptées.</em>
-            </h2>
-            <p>
-              Explorez nos domaines d’intervention et identifiez les expertises
-              adaptées aux priorités de votre organisation.
-            </p>
-            <a className="button button-dark" href="#services">
-              Découvrir nos expertises
-              <Icon name="arrow" />
-            </a>
+        <section aria-labelledby="faq-title" className="faq-section" id="faq">
+          <div className="section-shell faq-layout">
+            <div>
+              <p className="section-kicker">Questions fréquentes</p>
+              <h2 id="faq-title">
+                Les informations <em>essentielles.</em>
+              </h2>
+            </div>
+            <div className="faq-list">
+              {faqs.map((item) => (
+                <details key={item.question}>
+                  <summary>{item.question}<span>+</span></summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
+
       </main>
 
       <footer className="site-footer">
         <a aria-label="HOUEDONOU & FILS — accueil" className="footer-brand" href="#accueil">
-          <BrandMark />
+          <span aria-hidden="true" className="footer-logo-crop">
+            <img src="/houedonou-fils-logo.jpg" alt="" />
+          </span>
           <span>HOUEDONOU <span>&amp; FILS</span></span>
         </a>
-        <p>Conseil · Conformité · Archives</p>
+        <p>Enseigne commerciale de HORUS INTERNATIONAL GROUP</p>
+        <div className="footer-links">
+          <a href="#expertises">Expertises</a>
+          <a href="#faq">FAQ</a>
+        </div>
         <p className="footer-copyright">
           © {new Date().getFullYear()} HOUEDONOU &amp; FILS. Tous droits réservés.
         </p>
